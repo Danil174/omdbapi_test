@@ -8,23 +8,39 @@ const isProd = !isDev;
 
 const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`
 
+const babelOptions = preset => {
+  const options = {
+    presets: [
+      '@babel/preset-env'
+    ]
+  }
+
+  if (preset) {
+    options.presets.push(preset)
+  }
+
+  return options;
+}
+
 module.exports = {
   context: path.resolve(__dirname, 'src'),
-  entry: './index.js',
+  entry: ['@babel/polyfill', './index.jsx'],
   output: {
     filename: filename('js'),
     path: path.resolve(__dirname, 'docs')
   },
   resolve: {
-    extensions: ['.js'],
-    alias: {
-      '@components': path.resolve(__dirname, 'src/components')
-    }
+    extensions: ['.js', '.jsx'],
+    // WIP
+    // alias: {
+    //   '@components': path.resolve(__dirname, 'src/components')
+    // }
   },
   devServer: {
     port: 4200,
     hot: isDev
   },
+  devtool: isDev ? 'source-map' : '',
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html',
@@ -38,5 +54,25 @@ module.exports = {
         {from: path.resolve(__dirname, 'src/favicon.ico'), to: path.resolve(__dirname, 'docs')},
       ]
     })
-  ]
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: {
+          loader: 'babel-loader',
+          options: babelOptions()
+        }
+      },
+      {
+        test: /\.jsx$/,
+        exclude: /node_modules/,
+        loader: {
+          loader: 'babel-loader',
+          options: babelOptions('@babel/preset-react')
+        }
+      },
+    ]
+  }
 }
