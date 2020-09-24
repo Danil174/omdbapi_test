@@ -1,0 +1,43 @@
+{
+  "name": "omdbapi_test",
+  "version": "1.0.0",
+  "description": "react test task",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack --mode development",
+    "build": "cross-env NODE_ENV=production webpack --mode production",
+    "watch": "cross-env NODE_ENV=development wrbpack --mode development --watch",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --mode development --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Danil174/omdbapi_test.git"
+  },
+  "keywords": [
+    "react",
+    "redux",
+    "webpack"
+  ],
+  "author": "Milostiviy Danil <milostiviy.danil@yandex.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Danil174/omdbapi_test/issues"
+  },
+  "dependencies": {
+    "@material-ui/core": "4.11.0",
+    "prop-types": "15.7.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-redux": "7.2.1",
+    "react-router-dom": "5.2.0",
+    "redux": "4.0.5"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "3.0.0",
+    "copy-webpack-plugin": "6.1.1",
+    "cross-env": "7.0.2",
+    "html-webpack-plugin": "4.5.0",
+    "webpack": "4.44.2",
+    "webpack-cli": "3.3.12",
+    "webpack-dev-server": "3.11.0"
+  }
+}
