@@ -31,10 +31,6 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    // WIP
-    // alias: {
-    //   '@components': path.resolve(__dirname, 'src/components')
-    // }
   },
   devServer: {
     port: 4200,
