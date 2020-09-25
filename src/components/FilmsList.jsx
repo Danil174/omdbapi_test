@@ -16,7 +16,13 @@ const FilmsList = ({ filmList }) => {
 };
 
 FilmsList.propTypes = {
-  filmList: PropTypes.array
+  filmList: PropTypes.arrayOf(
+    PropTypes.shape({
+      Title: PropTypes.string,
+      Year: PropTypes.string,
+      imdbID: PropTypes.string
+    })
+  )
 };
 
 export default FilmsList;
