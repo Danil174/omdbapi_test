@@ -1,25 +1,16 @@
 import React from 'react';
-import { Switch, Route, Router } from "react-router-dom";
-import history from "../history";
+import { Switch, Route } from "react-router-dom";
 
 import MainPage from './MainPage';
 import MoviePage from './MoviePage';
 
 const App = () => {
   return (
-    <Router
-      history={history}
-    >
-      <Switch>
-        <Route exact path={`/`}>
-          <MainPage />
-        </Route>
-        <Route exact path={`/film/:id?`} component={MoviePage} />
-        {/* <Route>
-          <NotFound />
-        </Route> */}
-      </Switch>
-    </Router>
+    <Switch>
+      <Route path={`/`} exact component={MainPage} />
+      <Route exact path={`/film/:id?`} component={MoviePage} />
+      <Route render={() => <h1 style={{ color: 'red', textAlign: 'center' }}>404 not found</h1>} />
+    </Switch>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import history from "../history";
+import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
@@ -22,13 +22,18 @@ const useStyles = makeStyles({
   }
 });
 
-const FilmCard = ({ film }) => {
+const FilmCard = (props) => {
+  const { film , history } = props;
   const classes = useStyles();
   const stopper = film.Poster === 'N/A' ? './nf.png': film.Poster;
   return (
     <article
       className={classes.article}
-      onClick={() => history.push(`/film/2`)}
+      onClick={() => {
+        history.push({
+          pathname: '/film/2'
+        });
+      }}
     >
       <span className={classes.title}>{film.Title}</span>
       <div className={classes.imgWrapper}>
@@ -45,6 +50,9 @@ const FilmCard = ({ film }) => {
 };
 
 FilmCard.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }),
   film: PropTypes.shape({
     Title: PropTypes.string,
     Type: PropTypes.string,
@@ -54,4 +62,4 @@ FilmCard.propTypes = {
   })
 };
 
-export default FilmCard;
+export default withRouter(FilmCard);

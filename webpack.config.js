@@ -42,6 +42,10 @@ module.exports = {
         target: `http://localhost:4200/`,
         pathRewrite: {'^/film/*': ``},
       },
+      '/film*': {
+        target: `http://localhost:4200/`,
+        pathRewrite: {'^/film*': ``},
+      },
     },
   },
   devtool: isDev ? 'source-map' : '',
