@@ -1,45 +1,91 @@
 const initialState = {
-  films: [
-    { Title: "Beta Test", Year: "2016", imdbID: "tt4244162" },
-    { Title: "Johnny Test", Year: "2005–2014", imdbID: "tt0454349" },
-    { Title: "Test Pilot", Year: "1938", imdbID: "tt0030848" },
-    { Title: "The Test: A New Era for Australia's Team", Year: "2020–", imdbID: "tt11347692" },
-    { Title: "Test", Year: "2013", imdbID: "tt2407380" },
-  ],
+  films: [],
   searchStr: '',
-  searchPage: 1
+  searchPage: 1,
+  pageAmount: 0,
+  errorMessage: null,
+  loading: false
 };
 
 const ActionType = {
-  GET_FILMS: `GET_FILMS`,
   SET_SEARCH_STR: `SET_SEARCH_STR`,
+  SET_PAGE_AMOUNT: `SET_PAGE_AMOUNT`,
+  SET_SEARCH_PAGE: `SET_SEARCH_PAGE`,
+  LOAD_FILMS: `LOAD_FILMS`,
+  START_LOADING: `START_LOADING`,
+  END_LOADING: `END_LOADING`,
 };
 
 const ActionCreator = {
-  getFilms: (films) => ({
-    type: ActionType.GET_FILMS,
-    payload: films,
-  }),
   setSeatchStr: (string) => ({
     type: ActionType.SET_SEARCH_STR,
     payload: string,
+  }),
+  setSearchPage: (number) => ({
+    type: ActionType.SET_SEARCH_PAGE,
+    payload: number,
+  }),
+  loadFilms: (films) => ({
+    type: ActionType.LOAD_FILMS,
+    payload: films,
+  }),
+  setPagesAmount: (amount) =>({
+    type: ActionType.SET_PAGE_AMOUNT,
+    payload: amount,
+  }),
+  startLoading: () => ({
+    type: ActionType.START_LOADING,
+  }),
+  endLoading: () => ({
+    type: ActionType.END_LOADING,
   }),
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-  case ActionType.GET_FILMS:
 
-    return {
-      ...state,
-      film: action.payload
-    };
   case ActionType.SET_SEARCH_STR:
 
     return {
       ...state,
       searchStr: action.payload
     };
+
+  case ActionType.SET_PAGE_AMOUNT:
+
+    return {
+      ...state,
+      pageAmount: Math.ceil(Number(action.payload) / 10)
+    };
+
+  case ActionType.SET_SEARCH_PAGE:
+
+    return {
+      ...state,
+      searchPage: action.payload
+    };
+
+  case ActionType.LOAD_FILMS:
+
+    return {
+      ...state,
+      films: action.payload
+    };
+
+  case ActionType.START_LOADING:
+
+    return {
+      ...state,
+      loading: true
+    };
+
+  case ActionType.END_LOADING:
+
+    return {
+      ...state,
+      loading: false
+    };
+
   }
 
   return state;

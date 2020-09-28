@@ -9,10 +9,20 @@ const checkStatus = (response) => {
   }
 };
 
+// WIP вынести в константу
+const checkError = (response) => {
+  if (response.Response !== "False") {
+    return response;
+  } else {
+    throw new Error(response.Error);
+  }
+};
+
 export const fetchData = (endpoint) => {
   return fetch(endpoint)
     .then(checkStatus)
-    .then((res) => res.json());
+    .then((res) => res.json())
+    .then(checkError);
 };
 
 export const useDebounce = (value, debounceTime) => {
