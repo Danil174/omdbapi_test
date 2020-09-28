@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   },
 });
 
-const FilmsList = ({ filmList }) => {
+const FilmsList = ({ filmList, onClickHandler }) => {
 
   if (filmList.length === 0) {
     return <h2>Совпадений не найдено</h2>;
@@ -26,7 +26,7 @@ const FilmsList = ({ filmList }) => {
     >
       {filmList.map((it, index) =>
         <Grid item xs={3} key={index}>
-          <FilmCard film={it} />
+          <FilmCard film={it} onClickHandler={onClickHandler} />
         </Grid>
       )}
     </Grid>

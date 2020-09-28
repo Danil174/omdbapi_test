@@ -1,5 +1,8 @@
 import React from 'react';
-import { useSelector } from "react-redux";
+import { withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { AppRoutes } from '../const';
 
 import Search from './Search';
 import FilmList from './FilmsList';
@@ -13,12 +16,15 @@ const useStyles = makeStyles({
   },
 });
 
-const MainPage = () => {
-  const films = useSelector((state) => {
-    return state.films;
-  });
-
+const MainPage = ({ history }) => {
   const classes = useStyles();
+  const films = useSelector(state => state.films);
+
+  const MoveToFilmPage = id => {
+    history.push({
+      pathname: `${AppRoutes.FILM_PAGE}/${id}`
+    });
+  };
 
   return (
     <Container maxWidth="lg">
@@ -29,11 +35,17 @@ const MainPage = () => {
       >
         <h1 className={classes.h1}>Film app</h1>
         <Search />
-        <FilmList filmList={films} />
+        <FilmList filmList={films} onClickHandler={MoveToFilmPage} />
       </Grid>
       <SmartPagination />
     </Container>
   );
 };
 
-export default MainPage;
+MainPage.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }),
+};
+
+export default withRouter(MainPage);
