@@ -33,8 +33,16 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   devServer: {
+    contentBase: path.join(__dirname, `docs`),
     port: 4200,
-    hot: isDev
+    hot: isDev,
+    historyApiFallback: true,
+    proxy: {
+      '/film/*': {
+        target: `http://localhost:4200/`,
+        pathRewrite: {'^/film/*': ``},
+      },
+    },
   },
   devtool: isDev ? 'source-map' : '',
   plugins: [

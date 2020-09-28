@@ -1,38 +1,25 @@
 import React from 'react';
-import { useSelector } from "react-redux";
+import { Switch, Route, Router } from "react-router-dom";
+import history from "../history";
 
-import Search from './Search';
-import FilmList from './FilmsList';
-import SmartPagination from './SmartPagination';
-
-import { Container, makeStyles, Grid } from '@material-ui/core';
-
-const useStyles = makeStyles({
-  h1: {
-    textTransform: 'uppercase'
-  },
-});
+import MainPage from './MainPage';
+import MoviePage from './MoviePage';
 
 const App = () => {
-  const films = useSelector((state) => {
-    return state.films;
-  });
-
-  const classes = useStyles();
-
   return (
-    <Container maxWidth="lg">
-      <Grid
-        container
-        direction="column"
-        alignItems="center"
-      >
-        <h1 className={classes.h1}>Film app</h1>
-        <Search />
-        <FilmList filmList={films} />
-      </Grid>
-      <SmartPagination />
-    </Container>
+    <Router
+      history={history}
+    >
+      <Switch>
+        <Route exact path={`/`}>
+          <MainPage />
+        </Route>
+        <Route exact path={`/film/:id?`} component={MoviePage} />
+        {/* <Route>
+          <NotFound />
+        </Route> */}
+      </Switch>
+    </Router>
   );
 };
 

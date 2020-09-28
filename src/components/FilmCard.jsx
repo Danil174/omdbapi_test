@@ -1,4 +1,5 @@
 import React from 'react';
+import history from "../history";
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
@@ -25,7 +26,10 @@ const FilmCard = ({ film }) => {
   const classes = useStyles();
   const stopper = film.Poster === 'N/A' ? './nf.png': film.Poster;
   return (
-    <article className={classes.article}>
+    <article
+      className={classes.article}
+      onClick={() => history.push(`/film/2`)}
+    >
       <span className={classes.title}>{film.Title}</span>
       <div className={classes.imgWrapper}>
         <img
