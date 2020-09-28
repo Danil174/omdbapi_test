@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from "react-redux";
-import { getFilms } from '../redux/selectors';
+import { useSelector } from "react-redux";
 
 import Search from './Search';
 import FilmList from './FilmsList';
+import SmartPagination from './SmartPagination';
 
 import { Container, makeStyles, Grid } from '@material-ui/core';
 
@@ -12,17 +11,17 @@ const useStyles = makeStyles({
   h1: {
     textTransform: 'uppercase'
   },
-  container: {
-    height: '100vh'
-  },
 });
 
-const App = ({ films }) => {
+const App = () => {
+  const films = useSelector((state) => {
+    return state.films;
+  });
 
   const classes = useStyles();
 
   return (
-    <Container maxWidth="lg" className={classes.container}>
+    <Container maxWidth="lg">
       <Grid
         container
         direction="column"
@@ -32,23 +31,9 @@ const App = ({ films }) => {
         <Search />
         <FilmList filmList={films} />
       </Grid>
+      <SmartPagination />
     </Container>
   );
 };
 
-const mapStateToProps = (state) => ({
-  films: getFilms(state),
-});
-
-App.propTypes = {
-  films: PropTypes.arrayOf(
-    PropTypes.shape({
-      Title: PropTypes.string,
-      Year: PropTypes.string,
-      imdbID: PropTypes.string
-    })
-  )
-};
-
-export { App };
-export default connect(mapStateToProps)(App);
+export default App;
