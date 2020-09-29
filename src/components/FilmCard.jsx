@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 const useStyles = makeStyles({
   article: {
     width: '160px',
+    margin: '0 auto',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     textAlign: 'center',

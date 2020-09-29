@@ -20,11 +20,11 @@ const SmartPagination = () => {
   const pageAmount = useSelector(state => state.pageAmount);
   const searchPage = useSelector(state => state.searchPage);
 
-  const handlePageChange = (evt, page) => {
+  const handlePageChange = (_, page) => {
     dispatch(ActionCreator.setSearchPage(page));
   };
 
-  if (pageAmount === 0) { // перенести логику отсутсвия пагинации в главную страницу
+  if (pageAmount < 11) {
     return <></>;
   }
 

@@ -9,3 +9,7 @@ export const getCurrentFilmID = (state) => {
 export const getSearchStr = (state) => {
   return state.searchStr;
 };
+
+export const getSearchPage = (state) => {
+  return state.searchPage;
+};

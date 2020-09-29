@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles, Container } from '@material-ui/core';
 import FilmCard from './FilmCard';
 
 const useStyles = makeStyles({
@@ -12,7 +12,18 @@ const useStyles = makeStyles({
 const FilmsList = ({ filmList, onClickHandler }) => {
 
   if (filmList.length === 0) {
-    return <h2>Совпадений не найдено</h2>;
+    return (
+      <Container maxWidth="lg">
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          style={{ height: '50vh' }}
+        >
+          <h2>Совпадений не найдено</h2>
+        </Grid>
+      </Container>
+    );
   }
 
   const classes = useStyles();
