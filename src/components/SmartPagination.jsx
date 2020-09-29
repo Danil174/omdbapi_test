@@ -17,7 +17,6 @@ const SmartPagination = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-
   const pageAmount = useSelector(state => state.pageAmount);
   const searchPage = useSelector(state => state.searchPage);
 
