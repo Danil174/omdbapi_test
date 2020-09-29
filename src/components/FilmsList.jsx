@@ -34,6 +34,7 @@ const FilmsList = ({ filmList, onClickHandler }) => {
 };
 
 FilmsList.propTypes = {
+  onClickHandler: PropTypes.func.isRequired,
   filmList: PropTypes.arrayOf(
     PropTypes.shape({
       Title: PropTypes.string,
