@@ -1,35 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
 import { ActionCreator } from '../redux/reducer';
-
-import TextInput from './TextInput';
+import PropTypes from 'prop-types';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 import { DEBOUNCE_TIME } from '../const';
 import { useDebounce } from '../utils';
 
-const Search = () => {
-  const dispatch = useDispatch();
-  const [searchStr, setSearchStr] = useState('');
+const Search = ({ options, searchString }) => {
 
-  const debouncedString = useDebounce(searchStr.trim().replace(/\s+/g, ' '), DEBOUNCE_TIME);
+  const dispatch = useDispatch();
+  const [searchStr, setSearchStr] = useState(searchString);
 
   const handleChange = evt => {
     setSearchStr(evt.target.value);
   };
 
+  const debouncedString = useDebounce(searchStr.trim().replace(/\s+/g, ' '), DEBOUNCE_TIME);
+
   useEffect(() => {
-    if (debouncedString) {
-      dispatch(ActionCreator.setSeatchStr(debouncedString));
-    } else {
-      console.log('do nothing');
-    }
+    dispatch(ActionCreator.setSearchStr(debouncedString));
   }, [debouncedString]);
 
   return (
     <>
-      <TextInput str={searchStr} onChange={handleChange} />
+      <div style={{ width: 300 }}>
+        <Autocomplete
+          disableClearable
+          options={options}
+          value={debouncedString}
+          getOptionLabel={(option) => option || '' }
+          getOptionSelected={(option) => {
+            return option.toLowerCase().includes(debouncedString.toLowerCase());
+          }}
+          onChange={(_, newValue, reason) => {
+            if (reason === 'clear') {
+              setSearchStr('');
+            } else {
+              setSearchStr(newValue);
+            }
+          }}
+          renderInput={(params) => <TextField
+            {...params}
+            value={debouncedString}
+            onChange={handleChange}
+          />
+          }
+        />
+      </div>
     </>
   );
+};
+
+Search.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  searchString: PropTypes.string.isRequired
 };
 
 export default Search;
