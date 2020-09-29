@@ -25,7 +25,7 @@ const Search = ({ options, searchString }) => {
 
   return (
     <>
-      <div style={{ width: 300 }}>
+      <div style={{ width: 300, margin: '0 auto' }}>
         <Autocomplete
           disableClearable
           options={options}

@@ -1,44 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-// import { useSelector, useDispatch } from "react-redux";
-import { Container, Grid, CircularProgress, Button } from '@material-ui/core';
+import { ActionCreator } from '../redux/reducer';
+import { useSelector, useDispatch } from "react-redux";
+import { Container, Grid, Button } from '@material-ui/core';
+import Search from './Search';
+import Spinner from './Spinner';
 import PropTypes from 'prop-types';
-import { fetchData } from '../utils';
-import { MY_API_KEY } from '../const';
-
-const fetchFilm = async (imdbID) => {
-  const FilmData = await fetchData(`http://www.omdbapi.com/?apikey=${MY_API_KEY}&i=${imdbID}&plot=full`);
-  return FilmData;
-};
 
 const MoviePage = ({ match }) => {
   if (match.params.id === undefined) {
     return <Redirect to={'/'} />;
   }
 
-  const [film, setFilm] = useState(null);
-
-  // const loading = useSelector(state => state.loading);
-  // const film = useSelector(state => state.currentFilm);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // загрузка фильма
-    //dispatch(ActionCreator.loadFilm(match.params.id));
-    fetchFilm(match.params.id).then(data => setFilm(data));
+    dispatch(ActionCreator.setCurrentFilmID(match.params.id));
   }, []);
+
+  const film = useSelector(state => state.film);
 
   if (!film) {
     return (
-      <Container maxWidth="lg">
-        <Grid
-          container
-          justify="center"
-          alignItems="center"
-          style={{ height: '100vh' }}
-        >
-          <CircularProgress size={100}/>
-        </Grid>
-      </Container>
+      <Spinner />
     );
   }
 
@@ -54,6 +38,13 @@ const MoviePage = ({ match }) => {
         <Grid item xs={12}>
           <h2 style={{ textAlign: "center" }}>{film.Title}</h2>
         </Grid>
+        {/* <Grid item xs={12}>
+          <Search
+            options={[]}
+            searchString={''}
+            // redirectTo={}
+          />
+        </Grid> */}
         <Grid item xs={3}>
           <p>Released: {film.Released}</p>
           <hr />

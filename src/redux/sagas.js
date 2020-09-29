@@ -1,12 +1,20 @@
-import { takeEvery, call, put, select } from 'redux-saga/effects';
+import { takeEvery, all, call, put, select } from 'redux-saga/effects';
 import { ActionCreator } from './reducer';
-import { getSearchStr } from './selectors';
+import { getSearchStr, getCurrentFilmID } from './selectors';
+import { fetchFilms, fetchFilm } from '../api';
 
-export function* sagaWatcher() {
-  yield takeEvery(`SET_SEARCH_STR`, sagaWorker);
+export default function* rootSaga() {
+  yield all([
+    watchSetSerchString(),
+    watchLoadFilm()
+  ]);
 }
 
-function* sagaWorker() {
+function* watchSetSerchString() {
+  yield takeEvery(`SET_SEARCH_STR`, setSerchStringWorker);
+}
+
+function* setSerchStringWorker() {
   try {
     yield put(ActionCreator.startLoading());
     const str = yield select(getSearchStr);
@@ -14,16 +22,25 @@ function* sagaWorker() {
     yield put(ActionCreator.setPagesAmount(totalResults));
     yield put(ActionCreator.loadFilms(Search));
   } catch (e) {
+    yield put(ActionCreator.setPagesAmount(0));
+    yield put(ActionCreator.loadFilms([]));
     console.log(e);
   } finally {
     yield put(ActionCreator.endLoading());
   }
 }
 
-import { fetchData } from '../utils';
-import { MY_API_KEY } from '../const';
+function* watchLoadFilm() {
+  yield takeEvery(`SET_CURRENT_FILM_ID`, loadFilmWorker);
+}
 
-const fetchFilms = async (searchStr, page = 1) => {
-  const FilmsData = await fetchData(`http://www.omdbapi.com/?apikey=${MY_API_KEY}&s=${searchStr}&page=${page}`);
-  return FilmsData;
-};
+function* loadFilmWorker() {
+  try {
+    const id = yield select(getCurrentFilmID);
+    const film = yield call(fetchFilm, id);
+    yield put(ActionCreator.loadFilm(film));
+  } catch (e) {
+    yield put(ActionCreator.loadFilm(null));
+    console.log(e);
+  }
+}

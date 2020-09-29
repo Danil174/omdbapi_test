@@ -4,14 +4,18 @@ const initialState = {
   searchPage: 1,
   pageAmount: 0,
   errorMessage: null,
-  loading: false
+  loading: false,
+  currentFilmID: null,
+  film: null
 };
 
 const ActionType = {
   SET_SEARCH_STR: `SET_SEARCH_STR`,
   SET_PAGE_AMOUNT: `SET_PAGE_AMOUNT`,
   SET_SEARCH_PAGE: `SET_SEARCH_PAGE`,
+  SET_CURRENT_FILM_ID: `SET_CURRENT_FILM_ID`,
   LOAD_FILMS: `LOAD_FILMS`,
+  LOAD_FILM: `LOAD_FILM`,
   START_LOADING: `START_LOADING`,
   END_LOADING: `END_LOADING`,
 };
@@ -28,6 +32,14 @@ const ActionCreator = {
   loadFilms: (films) => ({
     type: ActionType.LOAD_FILMS,
     payload: films,
+  }),
+  setCurrentFilmID: (id) => ({
+    type: ActionType.SET_CURRENT_FILM_ID,
+    payload: id,
+  }),
+  loadFilm: (film) => ({
+    type: ActionType.LOAD_FILM,
+    payload: film,
   }),
   setPagesAmount: (amount) =>({
     type: ActionType.SET_PAGE_AMOUNT,
@@ -65,11 +77,25 @@ const reducer = (state = initialState, action) => {
       searchPage: action.payload
     };
 
+  case ActionType.SET_CURRENT_FILM_ID:
+
+    return {
+      ...state,
+      currentFilmID: action.payload
+    };
+
   case ActionType.LOAD_FILMS:
 
     return {
       ...state,
       films: action.payload
+    };
+
+  case ActionType.LOAD_FILM:
+
+    return {
+      ...state,
+      film: action.payload
     };
 
   case ActionType.START_LOADING:
