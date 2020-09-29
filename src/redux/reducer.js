@@ -17,7 +17,7 @@ const ActionType = {
 };
 
 const ActionCreator = {
-  setSeatchStr: (string) => ({
+  setSearchStr: (string) => ({
     type: ActionType.SET_SEARCH_STR,
     payload: string,
   }),
