@@ -21,8 +21,6 @@ const MainPage = ({ history }) => {
   const films = useSelector(state => state.films);
   const stateSearchStr = useSelector(state => state.searchStr);
 
-  const titlesCollection = films.length === 0 ? [] : films.map(it => it.Title);
-
   const MoveToFilmPage = id => {
     history.push({
       pathname: `${AppRoutes.FILM_PAGE}/${id}`
@@ -38,8 +36,9 @@ const MainPage = ({ history }) => {
       >
         <h1 className={classes.h1}>Film app</h1>
         <Search
-          options={titlesCollection}
+          collection={films}
           searchString={stateSearchStr}
+          withRedirection={false}
         />
         <FilmList filmList={films} onClickHandler={MoveToFilmPage} />
       </Grid>

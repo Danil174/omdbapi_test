@@ -26,7 +26,6 @@ function* setSerchStringWorker() {
     yield put(ActionCreator.loadFilms([]));
     yield put(ActionCreator.resetPagesAmount());
     yield put(ActionCreator.resetSearchPage());
-    console.log(e);
   }
 }
 
@@ -41,7 +40,6 @@ function* loadFilmWorker() {
     yield put(ActionCreator.loadFilm(film));
   } catch (e) {
     yield put(ActionCreator.loadFilm(null));
-    console.log(e);
   }
 }
 
@@ -59,6 +57,5 @@ function* changePageWorker() {
     yield put(ActionCreator.loadFilms([]));
     yield put(ActionCreator.resetPagesAmount());
     yield put(ActionCreator.resetSearchPage());
-    console.log(e);
   }
 }

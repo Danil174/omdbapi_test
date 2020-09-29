@@ -14,11 +14,13 @@ const MoviePage = ({ match }) => {
 
   const dispatch = useDispatch();
 
+  const film = useSelector(state => state.film);
+  const films = useSelector(state => state.films);
+  const stateSearchStr = useSelector(state => state.searchStr);
+
   useEffect(() => {
     dispatch(ActionCreator.setCurrentFilmID(match.params.id));
-  }, []);
-
-  const film = useSelector(state => state.film);
+  }, [match.params.id]);
 
   if (!film) {
     return (
@@ -38,13 +40,13 @@ const MoviePage = ({ match }) => {
         <Grid item xs={12}>
           <h2 style={{ textAlign: "center" }}>{film.Title}</h2>
         </Grid>
-        {/* <Grid item xs={12}>
+        <Grid item xs={12}>
           <Search
-            options={[]}
-            searchString={''}
-            // redirectTo={}
+            collection={films}
+            searchString={stateSearchStr}
+            withRedirection={true}
           />
-        </Grid> */}
+        </Grid>
         <Grid item xs={3}>
           <p>Released: {film.Released}</p>
           <hr />
