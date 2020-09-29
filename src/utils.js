@@ -9,7 +9,6 @@ const checkStatus = (response) => {
   }
 };
 
-// WIP вынести в константу
 const checkError = (response) => {
   if (response.Response !== "False") {
     return response;
