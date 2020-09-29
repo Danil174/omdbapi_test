@@ -3,13 +3,14 @@ import { Redirect, Link } from 'react-router-dom';
 import { ActionCreator } from '../redux/reducer';
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Grid, Button } from '@material-ui/core';
+import { AppRoutes } from '../const';
 import Search from './Search';
 import Spinner from './Spinner';
 import PropTypes from 'prop-types';
 
 const MoviePage = ({ match }) => {
   if (match.params.id === undefined) {
-    return <Redirect to={'/'} />;
+    return <Redirect to={AppRoutes.ROOT} />;
   }
 
   const dispatch = useDispatch();
@@ -82,7 +83,7 @@ const MoviePage = ({ match }) => {
           />
         </Grid>
         <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to={'/'} style={{ textDecoration: 'none' }}>
+          <Link to={AppRoutes.ROOT} style={{ textDecoration: 'none' }}>
             <Button
               variant="contained"
               color="primary"
