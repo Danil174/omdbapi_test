@@ -8,6 +8,6 @@ export const StatusCodes = {
 export const MY_API_KEY = '3a575722';
 
 export const AppRoutes = {
-  ROOT: `/app`,
+  ROOT: `/omdbapi_test`,
   FILM_PAGE: `/film`,
 };
