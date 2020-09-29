@@ -24,8 +24,8 @@ function* setSerchStringWorker() {
     yield put(ActionCreator.loadFilms(Search));
   } catch (e) {
     yield put(ActionCreator.loadFilms([]));
-    yield put(ActionCreator.setSearchPage(1));
-    yield put(ActionCreator.setPagesAmount(0));
+    yield put(ActionCreator.resetPagesAmount());
+    yield put(ActionCreator.resetSearchPage());
     console.log(e);
   }
 }
@@ -56,8 +56,9 @@ function* changePageWorker() {
     const { Search } = yield call(fetchFilms, str, page);
     yield put(ActionCreator.loadFilms(Search));
   } catch (e) {
-    yield put(ActionCreator.setSearchPage(1));
-    yield put(ActionCreator.setPagesAmount(0));
+    yield put(ActionCreator.loadFilms([]));
+    yield put(ActionCreator.resetPagesAmount());
+    yield put(ActionCreator.resetSearchPage());
     console.log(e);
   }
 }
