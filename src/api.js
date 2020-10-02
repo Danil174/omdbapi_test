@@ -2,7 +2,9 @@ import { fetchData } from './utils';
 import { MY_API_KEY } from './const';
 
 export const fetchFilms = async (searchStr, page = 1) => {
-  const FilmsData = await fetchData(`http://www.omdbapi.com/?apikey=${MY_API_KEY}&s=${searchStr}&page=${page}`);
+  const changeString = string => encodeURIComponent(string).split('%20').join('+');
+  const newString = changeString(searchStr);
+  const FilmsData = await fetchData(`http://www.omdbapi.com/?apikey=${MY_API_KEY}&s=${newString}&page=${page}`);
   return FilmsData;
 };
 

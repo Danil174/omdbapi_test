@@ -10,6 +10,7 @@ const checkStatus = (response) => {
 };
 
 const checkError = (response) => {
+  console.log(response);
   if (response.Response !== "False") {
     return response;
   } else {
@@ -20,7 +21,9 @@ const checkError = (response) => {
 export const fetchData = (endpoint) => {
   return fetch(endpoint)
     .then(checkStatus)
-    .then((res) => res.json())
+    .then((res) => {
+      return res.json();
+    })
     .then(checkError);
 };
 
